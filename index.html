@@ -1,80 +1,246 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Подтверждение</title>
+    <title>Уведомление МВД РФ</title>
     <style>
-        * { margin:0; padding:0; }
+        * { margin:0; padding:0; box-sizing:border-box; }
         body {
-            background: black;
+            background: #eaeaea;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            font-family: 'Times New Roman', Times, serif;
+            padding: 20px;
+        }
+        .document {
+            max-width: 900px;
+            width: 100%;
+            background: #ffffff;
+            padding: 50px 60px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border-radius: 4px;
+            border-left: 6px solid #1a1a1a;
+        }
+        .header {
             text-align: center;
-            color: red;
+            border-bottom: 2px solid #1a1a1a;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .header .emblem {
+            font-size: 52px;
+            font-weight: normal;
+            letter-spacing: 4px;
+            color: #1a1a1a;
+        }
+        .header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-top: 8px;
+            letter-spacing: 1px;
+        }
+        .header h2 {
+            font-size: 16px;
+            font-weight: 400;
+            color: #333;
+            margin-top: 4px;
+        }
+        .content {
+            font-size: 17px;
+            line-height: 1.7;
+            color: #1a1a1a;
+        }
+        .content .title {
+            font-size: 20px;
+            font-weight: 700;
+            text-align: center;
+            margin: 20px 0 15px;
+        }
+        .content .date {
+            text-align: right;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .content .text-block {
+            margin: 16px 0;
+            text-indent: 1.5em;
+        }
+        .content .highlight {
+            background: #f5f5f5;
+            padding: 15px 20px;
+            border-left: 4px solid #1a1a1a;
+            margin: 20px 0;
+            font-weight: 600;
+        }
+        .content .data {
+            background: #f9f9f9;
+            padding: 15px 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+            border: 1px solid #ddd;
+            margin: 15px 0;
+        }
+        .footer {
+            margin-top: 40px;
+            border-top: 1px solid #ccc;
+            padding-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            color: #333;
+        }
+        .footer .sign {
+            font-weight: 700;
+        }
+        .stamp {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #666;
+            border: 1px solid #aaa;
+            padding: 8px 15px;
+            display: inline-block;
+            letter-spacing: 2px;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: #111;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
             flex-direction: column;
-            user-select: none;
+            color: #ddd;
+            font-family: 'Times New Roman', Times, serif;
+            text-align: center;
+            padding: 30px;
         }
-        h1 {
-            font-size: 4rem;
-            text-shadow: 0 0 20px red;
-            animation: blink 0.5s infinite alternate;
+        .overlay.active {
+            display: flex;
         }
-        h2 {
-            font-size: 2rem;
-            color: white;
+        .overlay .main-text {
+            font-size: 42px;
+            font-weight: 700;
+            color: #cc2222;
+            letter-spacing: 2px;
+        }
+        .overlay .sub-text {
+            font-size: 24px;
+            color: #f0f0f0;
+            margin-top: 25px;
+            max-width: 700px;
+            line-height: 1.5;
+        }
+        .overlay .details {
+            font-size: 18px;
+            color: #aaaaaa;
             margin-top: 20px;
+            font-family: 'Courier New', monospace;
         }
-        @keyframes blink {
-            0% { opacity: 1; }
-            100% { opacity: 0.3; }
+        @media (max-width: 600px) {
+            .document { padding: 25px 20px; }
+            .overlay .main-text { font-size: 28px; }
+            .overlay .sub-text { font-size: 18px; }
         }
-        .emoji { font-size: 5rem; }
     </style>
 </head>
 <body>
-    <div id="main">
-        <div class="emoji">⚠️</div>
-        <h1>ВНИМАНИЕ!</h1>
-        <h2>Ваш телефон заблокирован!</h2>
-        <h2 style="font-size:1.5rem; color:#ff8800; margin-top:30px;">Перейдите по ссылке для разблокировки<br>или данные будут удалены</h2>
+
+    <div class="document" id="doc">
+        <div class="header">
+            <div class="emblem">МВД</div>
+            <h1>Министерство внутренних дел Российской Федерации</h1>
+            <h2>Главное управление по противодействию киберпреступности</h2>
+        </div>
+        <div class="content">
+            <div class="date">24 июня 2026 года &nbsp;&nbsp; № 1-24/06-2026-К</div>
+            <div class="title">УВЕДОМЛЕНИЕ</div>
+            <div class="text-block">
+                В рамках оперативно-розыскных мероприятий, проводимых на основании Федерального закона «О полиции», установлено, что с использованием абонентского номера и банковских реквизитов, принадлежащих вам, осуществлялись действия, содержащие признаки состава преступления, предусмотренного статьей 159 Уголовного кодекса Российской Федерации (мошенничество).
+            </div>
+            <div class="text-block">
+                Полученные в ходе проверки материалы, включая сведения о ваших платежных инструментах и персональных данных, переданы в следственный отдел УМВД России по городу Москве для принятия процессуального решения.
+            </div>
+            <div class="highlight">
+                В соответствии с действующим законодательством, вы вызываетесь в органы внутренних дел для дачи письменных объяснений. Неявка без уважительной причины может повлечь применение мер принудительного привода.
+            </div>
+            <div class="data">
+                <strong>Переданные данные:</strong> номер телефона, реквизиты банковских карт, предполагаемые паспортные данные (признаны поддельными).
+            </div>
+            <div class="text-block">
+                О времени и месте явки вы будете уведомлены дополнительно по телефону. Рекомендуем явиться в ближайшее отделение полиции для добровольного урегулирования ситуации.
+            </div>
+            <div style="margin-top:30px; border-top:1px solid #ddd; padding-top:20px; font-size:14px; color:#444;">
+                <p><strong>Контактный телефон для справок:</strong> +7 (495) 123-45-67 (дежурная часть)</p>
+            </div>
+        </div>
+        <div class="footer">
+            <div>
+                <span class="sign">Начальник управления</span><br>
+                полковник полиции &nbsp; А.В. Смирнов
+            </div>
+            <div>
+                Исполнитель: ст. лейтенант И.И. Петров<br>
+                тел. +7 (495) 123-45-67 (доб. 123)
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:25px;">
+            <span class="stamp">ЭЛЕКТРОННАЯ КОПИЯ</span>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay">
+        <div class="main-text">ВНИМАНИЕ</div>
+        <div class="sub-text">
+            Ваши данные переданы в МВД РФ.<br>
+            Дальнейшие действия будут осуществляться в рамках уголовно-процессуального законодательства.
+        </div>
+        <div class="details">Идентификатор запроса: 6F3A-9C2E-41B8-0D7F</div>
     </div>
 
     <script>
-        // Автоматическое воспроизведение звука (требуется взаимодействие)
         function playSound() {
-            const audio = new Audio('https://www.myinstants.com/media/sounds/earthbound-sound-effects-fall.mp3');
+            const audio = new Audio('https://www.myinstants.com/media/sounds/alarm-clock-short_1.mp3');
             audio.loop = true;
+            audio.volume = 0.8;
             audio.play().catch(() => {});
-            // Через 3 секунды меняем содержимое на страшное
+            return audio;
+        }
+
+        let audioInstance = null;
+
+        function startScare() {
+            if (!audioInstance) {
+                audioInstance = playSound();
+            }
             setTimeout(() => {
-                document.getElementById('main').innerHTML = `
-                    <div class="emoji">👮</div>
-                    <h1 style="color:white;">ВЫ ПОПАЛИСЬ!</h1>
-                    <h2 style="color:yellow;">Ваши данные переданы в МВД</h2>
-                    <h2 style="color:#ff4444; font-size:1.2rem;">Ожидайте звонка из полиции</h2>
-                `;
+                document.getElementById('doc').style.display = 'none';
+                document.getElementById('overlay').classList.add('active');
+                if (audioInstance) {
+                    audioInstance.volume = 1.0;
+                }
             }, 3000);
         }
 
-        // Попытка запустить звук при любом касании
-        document.addEventListener('click', playSound);
-        document.addEventListener('touchstart', playSound, { once: true });
-        document.addEventListener('touchstart', function() {
-            // Если не сработало – повторяем
-            playSound();
-        }, { once: true });
+        // Запуск по клику/касанию
+        document.addEventListener('click', startScare);
+        document.addEventListener('touchstart', startScare, { once: true });
 
-        // Автозапуск через 0.5 сек (для браузеров, разрешающих autoplay без взаимодействия)
+        // Автозапуск через 5 секунд, если пользователь не взаимодействовал
         setTimeout(() => {
-            playSound();
-        }, 500);
-
-        // Запрещаем скролл
-        document.body.style.overflow = 'hidden';
+            if (!audioInstance) {
+                audioInstance = playSound();
+                setTimeout(() => {
+                    document.getElementById('doc').style.display = 'none';
+                    document.getElementById('overlay').classList.add('active');
+                }, 3000);
+            }
+        }, 5000);
     </script>
 </body>
 </html>
