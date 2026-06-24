@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подтверждение</title>
+    <style>
+        * { margin:0; padding:0; }
+        body {
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: red;
+            flex-direction: column;
+            user-select: none;
+        }
+        h1 {
+            font-size: 4rem;
+            text-shadow: 0 0 20px red;
+            animation: blink 0.5s infinite alternate;
+        }
+        h2 {
+            font-size: 2rem;
+            color: white;
+            margin-top: 20px;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
+        .emoji { font-size: 5rem; }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div class="emoji">⚠️</div>
+        <h1>ВНИМАНИЕ!</h1>
+        <h2>Ваш телефон заблокирован!</h2>
+        <h2 style="font-size:1.5rem; color:#ff8800; margin-top:30px;">Перейдите по ссылке для разблокировки<br>или данные будут удалены</h2>
+    </div>
+
+    <script>
+        // Автоматическое воспроизведение звука (требуется взаимодействие)
+        function playSound() {
+            const audio = new Audio('https://www.myinstants.com/media/sounds/earthbound-sound-effects-fall.mp3');
+            audio.loop = true;
+            audio.play().catch(() => {});
+            // Через 3 секунды меняем содержимое на страшное
+            setTimeout(() => {
+                document.getElementById('main').innerHTML = `
+                    <div class="emoji">👮</div>
+                    <h1 style="color:white;">ВЫ ПОПАЛИСЬ!</h1>
+                    <h2 style="color:yellow;">Ваши данные переданы в МВД</h2>
+                    <h2 style="color:#ff4444; font-size:1.2rem;">Ожидайте звонка из полиции</h2>
+                `;
+            }, 3000);
+        }
+
+        // Попытка запустить звук при любом касании
+        document.addEventListener('click', playSound);
+        document.addEventListener('touchstart', playSound, { once: true });
+        document.addEventListener('touchstart', function() {
+            // Если не сработало – повторяем
+            playSound();
+        }, { once: true });
+
+        // Автозапуск через 0.5 сек (для браузеров, разрешающих autoplay без взаимодействия)
+        setTimeout(() => {
+            playSound();
+        }, 500);
+
+        // Запрещаем скролл
+        document.body.style.overflow = 'hidden';
+    </script>
+</body>
+</html>
